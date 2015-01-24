@@ -5,13 +5,20 @@
 ##The inverse should be provided by calling functions.
 makeCacheMatrix <- function(x = matrix()) {
     inverse <- NULL
+    
+    ##set wrapped matrix and reinit stored inverse matrix
     set <- function(y) {
         x <<- y
         inverse <<- NULL
     }
+    ##return wrapped matrix
     get <- function() x
+    
+    ##store inverse matrix
     setInverse <- function(inv) inverse <<- inv
+    ##retrieve inverse matrix, could be null.
     getInverse <- function() inverse
+    #export functions
     list(set = set, get = get,
          setInverse = setInverse,
          getInverse = getInverse)
@@ -26,6 +33,7 @@ cacheSolve <- function(x, ...) {
         message("getting cached inverse matrix")
         return(inv)
     }
+    ##compute and store inverse matrix
     mat <- x$get()
     inv <- solve(mat, ...)
     x$setInverse(inv)
